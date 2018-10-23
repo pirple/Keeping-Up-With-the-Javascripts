@@ -1,5 +1,5 @@
 # Keeping Up With the Javascripts
-> Code snippets and challenges for the "Keeping Up With the Javascripts" course, available at Pirple.com
+> Code snippets for the "Keeping Up With the Javascripts" course, available at Pirple.com
 
 ## This class will be released in *December 2018*. In the meantime, watch the sneak preview on Youtube:
 
