@@ -25,7 +25,6 @@ var myObject4 = new Object();
 myObject3.__proto__.foo = function(){
   return 'bar';
 };
-
 console.log("This is the new method added to the prototype of myObject3: ",myObject3.foo());
 
 // Confirm that the foo() function has been added to the other object's prototype as well
@@ -65,6 +64,13 @@ var myObject8 = {
   }
 }
 console.log("This is the full contents of myObject6, including the prototype: ",myObject6);
+
+// Set an object's entire prototype to null
+var myObject9 = new Object();
+var myObject10 = new Object();
+myObject9.__proto__ = null;
+console.log("This is the prototype of the object whose prototype was set entirely to null: ",myObject9.__proto__);
+console.log("This is the prototype of the object whose prototype was not set to null: ",myObject10.__proto__);
 
 // Get the prototype of a String
 var myString1 = 'foo';
