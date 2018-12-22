@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--
+
+Events
+
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    .background-color {
+      background: orange;
+      border: 1px solid black;
+    }
+    .green {
+      background: green;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", addToLog);
+    window.addEventListener("load", checkImageSize);
+
+    function addToLog() {
+      console.log("DOM content loaded and parsed!")
+      const myLog = document.getElementById("log");
+      myLog.innerHTML += "<h1>Hiiiiii</h1>";
+    }
+
+    function checkImageSize() {
+      const myImg = document.getElementById("myImg");
+      console.log("Height: " + myImg.offsetHeight + " " + "width: " + myImg.offsetWidth);
+      myImg.style.width = "500px";
+      myImg.style.height = "auto";
+      myImg.style.borderRadius = "50%";
+    }
+
+  </script>
+</head>
+<body>
+  <div id="log">
+    <img id="myImg" src="https://i.imgur.com/8Ax4vyu.jpg" />
+  </div>
+  <div id="clicky">
+    Test text
+    <button>Click here!</button>
+  </div>
+  <div id="background">
+    <h2>I am size H2 header!</h2>
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+  </div>
+  <div id="div2">
+    <form id="myForm" method="post">
+      <input id="myInput"/><br/>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div id="div3">
+    <p></p>
+    <textarea></textarea>
+  </div>
+
+<script id="jsbin-javascript">
+// Events
+/*
+  - Any event that takes place in the DOM
+  - Can be user-generated or by an API
+  - Many types of events
+  - Event contains properties and methods
+  - addEventListener function takes in the event
+    to listen for, and a second argument to be
+    called whenever the described event fires.
+    - addEventListener("click", function(){
+      logic inside function
+    })
+*/
+
+const clickDiv = document.getElementById("clicky");
+const clickableButton = clickDiv.querySelector("button");
+
+clickableButton.addEventListener("click", logEvent);
+
+// clickableButton.addEventListener("focus", logEvent);
+
+
+function logEvent(e) {
+  clickableButton.innerText = e.timeStamp;
+  clickableButton.removeEventListener("click", logEvent);
+  console.log(e.type);
+}
+
+
+const bckgrnd = document.getElementById("background");
+const listItemsUL = bckgrnd.querySelector("UL");
+
+document.addEventListener("click", switchBackground);
+listItemsUL.addEventListener("click", addGreenBackground);
+
+
+function switchBackground(e) {
+  const hasBeenClicked = bckgrnd.contains(e.target);
+  if (hasBeenClicked) {
+    bckgrnd.classList.add("background-color");
+  }
+  else {
+    bckgrnd.classList.remove("background-color");
+  }
+}
+
+function addGreenBackground(e) {
+  e.stopPropagation();
+  const targetLI = e.target;
+  if (targetLI.nodeName !== "LI") {
+    return;
+  }
+  const green = document.querySelector(".green");
+  if (green) {
+    green.classList.remove("green");
+  }
+  targetLI.classList.add("green");
+}
+
+const div2 = document.getElementById("div2");
+const myForm = document.getElementById("myForm");
+
+myForm.addEventListener("submit", addToList);
+
+function addToList(e) {
+  e.preventDefault();
+  const myInput = document.getElementById("myInput").value;
+  const newLI = document.createElement("li");
+  newLI.innerText = myInput;
+  listItemsUL.appendChild(newLI);
+  myForm.reset();
+}
+
+
+const div3 = document.getElementById("div3");
+const para = div3.querySelector("p");
+const textArea = div3.querySelector("textarea");
+const paraText = "User is typing";
+let timer;
+let count = 0;
+
+textArea.addEventListener("keydown", addText);
+textArea.addEventListener("keyup", removeText);
+
+function addText(e) {
+  para.innerText = paraText;
+}
+
+function removeText(e) {
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    para.innerText = "";
+  }, 1000)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+
+The Fetch API
+
+-->
+
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+.highlight {
+  background-color: yellow;
+}
+</style>
+</head>
+<body>
+  <div id="planet">
+    <button id="button">Click for planet</button>
+    <button id="otherButton">Show multiple planets</button>
+    <button id="highlighter">Highlight unpopulated planets</button>
+    <select id="selector" name="select">
+      <option value="none">None</option>
+      <option value="unknown">Unknown</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+  </div>
+<script id="jsbin-javascript">
+// fetch API
+// returns a promise
+
+const myDiv = document.getElementById("planet");
+const myButton = document.getElementById("button");
+const mySecondButton = document.getElementById("otherButton");
+
+
+myButton.addEventListener("click", getPlanet);
+mySecondButton.addEventListener("click", getPlanets);
+
+function getPlanets() {
+  fetch(`https://swapi.co/api/planets/`)
+    .then(data => data.json())
+    .then(planets => processPlanets(planets.results));
+}
+
+function processPlanets(planetsArray) {
+  for(const [index, prop] of planetsArray.entries()) {
+    populatePlanet(prop, index);
+  }
+}
+
+
+function getPlanet() {
+  const randomNum = Math.floor(Math.random() * 10) + 1;
+  fetch(`https://swapi.co/api/planets/${randomNum}/`)
+    .then(data => data.json())
+    .then(d => populatePlanet(d))
+    .catch(err => console.log(err.message));
+}
+
+function populatePlanet(planetObj, index) {
+  const { name, climate, terrain, population, orbital_period } = planetObj;
+  let pop;
+
+  if (population > 0 && population <= 1000000) {
+    pop = "low";
+  } else if (population > 1000000 && population <= 1000000000) {
+    pop = "medium";
+  } else if (population > 1000000000) {
+    pop = "high";
+  } else {
+    pop = "unknown";
+  }
+
+  const planetDiv = `
+    <div class="planet" data-planetID=${index} data-population=${pop}>
+      <h1>${name}</h1>
+      <p>
+        ${name} has a climate that is ${climate}. The terrain is
+        ${terrain}, with a pop. of ${population === "unknown" ? population : parseInt(population).toLocaleString()}. The
+        orbital period is ${orbital_period} days.
+      </p>
+    </div>
+  `
+  myDiv.insertAdjacentHTML("beforeend", planetDiv);
+}
+
+const highlighter = document.getElementById("highlighter");
+
+highlighter.addEventListener("click", showUnpopulated);
+
+const allPlanetDivs = document.getElementsByClassName("planet");
+
+function showUnpopulated() {
+  for(const prop of allPlanetDivs) {
+    if (prop.dataset.population === "unknown") {
+      prop.classList.toggle("highlight");
+    }
+  }
+}
+
+const selector = document.getElementById("selector");
+
+selector.addEventListener("change", highlight);
+
+function highlight(e) {
+  const { value } = e.target;
+  for(const prop of allPlanetDivs) {
+    prop.style.background = "white";
+    if (prop.dataset.population === value) {
+      prop.style.background = "teal";
+    }
+  }
+}
+
+
+
+
+
+
+</script>
+</body>
+</html>

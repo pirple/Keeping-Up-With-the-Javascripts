@@ -1,8 +1,8 @@
 # Keeping Up With the Javascripts
 > Code snippets for the "Keeping Up With the Javascripts" course, available at Pirple.com
 
-## This class will be released in *December 2018*. In the meantime, watch the sneak preview on Youtube:
 
-### [https://youtu.be/HqJvWqQApII](https://youtu.be/HqJvWqQApII)
+## Part 1 of this course (ES6), is now available
+This course, like all others, is included with your pirple.com monthly membership. To join Pirple, visit our membership page here: 
 
-[<img src="https://s3.amazonaws.com/pirple/youtube-screenshot.png">](https://youtu.be/HqJvWqQApII)
+[https://pirple.thinkific.com/pages/membership](https://pirple.thinkific.com/pages/membership)
